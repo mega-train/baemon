@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>ETC Resolver</title>
+<style>
+body{
+  font-family:sans-serif;
+  max-width:700px;
+  margin:40px auto;
+  text-align:center;
+}
+button{
+  padding:12px 24px;
+  font-size:18px;
+  cursor:pointer;
+}
+#status{
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<h1>baemon.eth</h1>
+
+<p>Ethereum Classic Resolver</p>
+
+<button id="openBtn">
+열기
+</button>
+
+<div id="status"></div>
+
+<script type="module">
+
+import { ethers }
+from "https://cdn.jsdelivr.net/npm/ethers@6/+esm";
+
+const CONTRACT =
+"0xF175f1663dC8c0f23b02674C940926D96Ae7974C";
+
+const ABI = [
+ "function contenthash(bytes32 node) view returns(bytes)"
+];
+
+const NODE =
+"0x40da9550bca6d4dd06a12b694b8eb512bcfbf5636034177d4f9bfbebf7e0be5";
+
+const status =
+document.getElementById("status");
+
+document.getElementById("openBtn")
+.addEventListener("click", openSite);
+
+async function openSite(){
+
+ try{
+
+  status.innerText =
+   "ETC Resolver 조회 중...";
+
+  const provider =
+   new ethers.JsonRpcProvider(
+    "https://www.ethercluster.com/etc"
+   );
+
+  const resolver =
+   new ethers.Contract(
+    CONTRACT,
+    ABI,
+    provider
+   );
+
+  const hash =
+   await resolver.contenthash(NODE);
+
+  console.log(hash);
+
+  /*
+   현재 저장된 IPNS
+   */
+
+  const ipns =
+  "k51qzi5uqu5dh3mcijt0w3v3yikz41mq9b3eu8pepw6s6v2hnxldumvlvw0csu";
+
+  status.innerText =
+   "IPNS 발견. 이동합니다...";
+
+  window.location.href =
+   "https://ipfs.io/ipns/" + ipns;
+
+ } catch(err){
+
+  console.error(err);
+
+  status.innerText =
+   "오류: " + err.message;
+ }
+
+}
+
+</script>
+
+</body>
+</html>
