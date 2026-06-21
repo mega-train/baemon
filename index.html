@@ -1,0 +1,200 @@
+html<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>baemon.eth</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #fafafa;
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .palyangsa {
+            background: #ffffff;
+            padding: 50px 60px;
+            max-width: 700px;
+            width: 90%;
+            height: 82vh;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .main-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2563eb;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+        .author {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+        }
+        .body-area {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 30px;
+            padding-right: 5px;
+        }
+        .post-link {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+        .post-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 6px 0;
+            transition: color 0.15s ease;
+        }
+        .post-link:hover .post-title {
+            color: #2563eb;
+        }
+        .post-date {
+            font-size: 13px;
+            color: #aaa;
+        }
+        .post-content {
+            display: none;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: none;
+        }
+        .tag {
+            display: inline-block;
+            background: #fef08a;
+            color: #854d0e;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        .text-view {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #333333;
+            text-align: justify;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .body-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .body-area::-webkit-scrollbar-thumb {
+            background-color: #e2e8f0;
+            border-radius: 2px;
+        }
+        .footer { 
+            margin-top: 25px; 
+            text-align: center; 
+            font-size: 14px; 
+            color: #ef4444; 
+            font-weight: 500; 
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="palyangsa">
+    <div class="header">
+        <h1 class="main-title">八陽寺</h1>
+        <p class="author">武則地 法師</p>
+    </div>
+
+    <div class="body-area">
+        <div id="list-view">
+            <div class="post-link" onclick="showContent(1)">
+                <h2 class="post-title">月尾大橋</h2>
+                <div id="live-date" class="post-date"></div>
+            </div>
+        </div>
+
+        <div id="content-view" class="post-content">
+            <button class="back-btn" onclick="showList()">← 목록으로</button>
+            <br>
+            <div id="content-1" class="post-article" style="display:none;">
+                <div class="tag">八陽經</div>
+                <div class="text-view">月尾大橋 건설의 PROJECT!
+
+제물포구와 영종구를 잇는 인천의 마지막 대교,  월미대교는 초고속열차를 타고 전남 목포 또는 부산(경남)에서 출발하여 수도권을 지나 Jemulpo를 관통하며 서해를 건너는 유일한 관문이다.
+
+서울 강남과 인천국제공항 간 국도, 서울1호선, 수인분당선 및 KTX 등은 월미대교의 상부, 하부, 해저를 이용해 인천공항으로 연결된다.
+
+월미대교 건설이라는 중차대한 프로젝트를 달성하기 위해, 팔양경을 미리 독경하여야 한다.
+
+先讀此經三遍 所願成就 : 사전에 인과관계를 파악하고 요건을 충족한다면, 소원을 성취할 수 있다.
+
+위 내용은 팔양경연구회 회장이신 金昌德 보살님과 八陽敎 교주 月尾道士님의 말씀을 참조하였다.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">baemon.eth</div>
+
+<script>
+    function setLiveDate() {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        var dateString = year + '년 ' + month + '월 ' + day + '일';
+        document.getElementById('live-date').innerText = dateString;
+    }
+    setLiveDate();
+
+    function showContent(num) {
+        document.getElementById("list-view").style.display = "none";
+        document.getElementById("content-view").style.display = "block";
+        
+        var articles = document.getElementsByClassName("post-article");
+        for (var i = 0; i < articles.length; i++) {
+            articles[i].style.display = "none";
+        }
+        
+        document.getElementById("content-" + num).style.display = "block";
+        document.querySelector('.body-area').scrollTop = 0;
+    }
+
+    function showList() {
+        document.getElementById("content-view").style.display = "none";
+        document.getElementById("list-view").style.display = "block";
+        document.querySelector('.body-area').scrollTop = 0;
+    }
+</script>
+
+</body>
+</html>
