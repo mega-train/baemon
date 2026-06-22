@@ -31,16 +31,13 @@ button{
 
 <p>Ethereum Classic Resolver</p>
 
-<button id="openBtn">
-열기
-</button>
+<button id="openBtn">열기</button>
 
 <div id="status"></div>
 
 <script>
 
-const status =
-  document.getElementById("status");
+const status = document.getElementById("status");
 
 document
   .getElementById("openBtn")
@@ -53,11 +50,21 @@ async function openSite() {
     status.innerText =
       "Ethereum Classic Resolver 조회 중...";
 
+    console.log("Fetching Worker...");
+
     const r = await fetch(
-      "https://baemon-resolver.flyhigh8006.workers.dev"
+      "https://baemon-resolver.flyhigh8006.workers.dev",
+      {
+        method: "GET"
+      }
     );
 
+    console.log("status =", r.status);
+    console.log("ok =", r.ok);
+
     const data = await r.json();
+
+    console.log("data =", data);
 
     status.innerText =
       "IPNS 발견. 이동합니다...";
@@ -68,10 +75,11 @@ async function openSite() {
 
   } catch (err) {
 
-    console.error(err);
+    console.error("FULL ERROR:", err);
 
     status.innerText =
-      "오류: " + err.message;
+      "오류: " +
+      (err?.message || String(err));
 
   }
 
